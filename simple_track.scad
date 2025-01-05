@@ -49,7 +49,7 @@ module tie()
 	// The rail-holder:
 	railXform()
 	{
-		y = railBaseWidth + 4*extrusionWidth;
+		y = railBaseWidth + 6*extrusionWidth;
 		z = layerHeight * 2;
 		difference()
 		{
@@ -74,8 +74,8 @@ module clip(d=0)
 if(developmentRender)
 {
 	display() itemModule();
-	displayGhost() rails();
-	displayGhost() gauge();
+	// displayGhost() rails();
+	// displayGhost() gauge();
 }
 else
 {
