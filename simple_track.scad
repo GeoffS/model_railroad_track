@@ -8,7 +8,7 @@ prototypeTieSpacing = 19 * 25.4;
 
 // HO:
 modelScale = 1/87;
-modelGauge = 16.5;
+modelGauge = 10; //16.5;
 
 tieWidth = prototypeTieWidth * modelScale;
 tieHeight = prototypeTieHeight * modelScale;
@@ -21,7 +21,8 @@ railBaseWidth = 0.068 * 25.4;
 railHeadWidth = 0.033 * 25.4;
 railHeight = 0.083 * 25.4;
 
-railSpacingCtrs = modelGauge + railHeadWidth/2;
+railSpacingCtrs = modelGauge + railHeadWidth;
+echo(str("railSpacingCtrs = ", railSpacingCtrs));
 
 module itemModule()
 {
@@ -42,7 +43,7 @@ if(developmentRender)
 {
 	display() itemModule();
 	displayGhost() rails();
-	// displayGhost() gauge();
+	displayGhost() gauge();
 }
 else
 {
@@ -74,14 +75,15 @@ module rail(x)
 	tcu([0, -railBaseWidth/2, 0], [x, railBaseWidth, bh]);
 }
 
-// module rail();
-// {
-// 	x = 100;
-// 	w2 = railHeadWidth/2;
-// 	tcu([-x/2, -w2/2, 0], [x, w2, railHeight]);
-// }
+module gauge()
+{
+	x = 1;
+	z = 10;
+	yg = modelGauge - 0.05;
+	ozg = railHeight/2;
+	tcu([-x/2, -yg/2, ozg], [x, yg, z-ozg]);
 
-// module gauge()
-// {
-
-// }
+	yh = modelGauge + 4;
+	ozh = railHeight + 0.05;
+	tcu([-x/2, -yh/2, ozh], [x, yh, z-ozh]);
+}
