@@ -1,5 +1,8 @@
 include <../OpenSCADdesigns/MakeInclude.scad>
 
+extrusionWidth = 0.42;
+layerHeight = 0.2;
+
 // US Standard wood ties:
 prototypeTieWidth = 9 * 25.4;
 prototypeTieHeight = 8 * 25.4;
@@ -35,12 +38,32 @@ module itemModule()
 	
 	// Tie connector:
 	connectorX = numTies * tieSpacing;
-	doubleY() translate([0, railSpacingCtrs/2, 0]) tcu([-connectorX/2, -railBaseWidth/2, -tieHeight], [connectorX, railBaseWidth, tieHeight]);
+	doubleY() railXform() tcu([-connectorX/2, -railBaseWidth/2, -tieHeight], [connectorX, railBaseWidth, tieHeight]);
 }
 
 module tie()
 {
+	// The actual tie:
 	tcu([-tieWidth/2, -tieLength/2, -tieHeight], [tieWidth, tieLength, tieHeight]);
+
+	// The rail-holder:
+	railXform()
+	{
+		y = railBaseWidth + 4*extrusionWidth;
+		z = layerHeight * 2;
+		difference()
+		{
+			tcu([-tieWidth/2, -y/2, ], [tieWidth, y, z]);
+			x = tieWidth + 2*nothing;
+			tcu([-x/2, -railBaseWidth/2, 0], [x, railBaseWidth, 10]);
+		}
+		
+	}
+}
+
+module railXform()
+{
+	doubleY() translate([0,railSpacingCtrs/2,0]) children();
 }
 
 module clip(d=0)
