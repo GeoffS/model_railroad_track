@@ -8,7 +8,7 @@ prototypeTieSpacing = 19 * 25.4;
 
 // HO:
 modelScale = 1/87;
-modelGauge = 10; //16.5;
+modelGauge = 16.5;
 
 tieWidth = prototypeTieWidth * modelScale;
 tieHeight = prototypeTieHeight * modelScale;
