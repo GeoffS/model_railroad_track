@@ -1,24 +1,87 @@
 include <../OpenSCADdesigns/MakeInclude.scad>
 
+// US Standard wood ties:
+prototypeTieWidth = 9 * 25.4;
+prototypeTieHeight = 8 * 25.4;
+prototypeTieLength = 8.5 * 12 * 25.4;
+prototypeTieSpacing = 19 * 25.4;
+
+// HO:
+modelScale = 1/87;
+modelGauge = 16.5;
+
+tieWidth = prototypeTieWidth * modelScale;
+tieHeight = prototypeTieHeight * modelScale;
+tieLength = prototypeTieLength * modelScale;
+tieSpacing = prototypeTieSpacing * modelScale;
+
+// Micro Engineering Code 83:
+// https://cs.trains.com/mrr/f/88/p/85478/1010853.aspx
+railBaseWidth = 0.068 * 25.4;
+railHeadWidth = 0.033 * 25.4;
+railHeight = 0.083 * 25.4;
+
+railSpacingCtrs = modelGauge + railHeadWidth/2;
+
 module itemModule()
 {
-	
+	tie();
 }
 
-module clip()
+module tie()
+{
+	tcu([-tieWidth/2, -tieLength/2, -tieHeight], [tieWidth, tieLength, tieHeight]);
+}
+
+module clip(d=0)
 {
 	//tc([-200, -400, -10], 400);
 }
 
 if(developmentRender)
 {
-	difference()
-	{
-		itemModule();
-		clip();
-	}
+	display() itemModule();
+	displayGhost() rails();
+	// displayGhost() gauge();
 }
 else
 {
 	itemModule();
 }
+
+module rails()
+{
+	x = 100;
+	y = railSpacingCtrs/2;
+	echo(str("y = ", y));
+	doubleY() translate([-x/2, y, 0]) 
+	{
+		rail(x);
+	}
+}
+
+module rail(x)
+{
+	// Web:
+	ww2 = railHeadWidth/2;
+	tcu([0, -ww2/2, 0], [x, ww2, railHeight]);
+	
+	// Head:
+	tcu([0, -railHeadWidth/2, railHeight-railHeadWidth], [x, railHeadWidth, railHeadWidth]);
+
+	// Base:
+	bh = railHeadWidth * 0.5;
+	tcu([0, -railBaseWidth/2, 0], [x, railBaseWidth, bh]);
+}
+
+// module rail();
+// {
+// 	x = 100;
+// 	w2 = railHeadWidth/2;
+// 	tcu([-x/2, -w2/2, 0], [x, w2, railHeight]);
+// }
+
+// module gauge()
+// {
+
+// }
