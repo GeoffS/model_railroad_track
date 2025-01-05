@@ -26,13 +26,16 @@ echo(str("railSpacingCtrs = ", railSpacingCtrs));
 
 module itemModule()
 {
-	numTies = 5;
+	numTies = 4;
 	for (i = [0:1:numTies]) 
 	{
 		x = tieSpacing * (i - floor(numTies/2));
 		translate([x,0,0]) tie();
 	}
 	
+	// Tie connector:
+	connectorX = numTies * tieSpacing;
+	doubleY() translate([0, railSpacingCtrs/2, 0]) tcu([-connectorX/2, -railBaseWidth/2, -tieHeight], [connectorX, railBaseWidth, tieHeight]);
 }
 
 module tie()
