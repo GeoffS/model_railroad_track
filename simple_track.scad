@@ -26,7 +26,13 @@ echo(str("railSpacingCtrs = ", railSpacingCtrs));
 
 module itemModule()
 {
-	tie();
+	numTies = 5;
+	for (i = [0:1:numTies]) 
+	{
+		x = tieSpacing * (i - floor(numTies/2));
+		translate([x,0,0]) tie();
+	}
+	
 }
 
 module tie()
