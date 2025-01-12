@@ -20,9 +20,11 @@ tieSpacing = prototypeTieSpacing * modelScale;
 
 // Micro Engineering Code 83:
 // https://cs.trains.com/mrr/f/88/p/85478/1010853.aspx
-railBaseWidth = 0.068 * 25.4;
+railBaseWidth = 0.068 * 25.4 + 0.1;
 railHeadWidth = 0.033 * 25.4;
 railHeight = 0.083 * 25.4;
+
+echo(str("railBaseWidth = ", railBaseWidth));
 
 railSpacingCtrs = modelGauge + railHeadWidth;
 echo(str("railSpacingCtrs = ", railSpacingCtrs));
